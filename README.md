@@ -54,7 +54,7 @@ SPIRE Server during bootstrap, read plugin config files in the `/opt/spire/conf/
 ````  
 plugin_name = "hsmkeymanager"
 plugin_cmd = "/path/to/plugin_binary"
-plugin_checksum = ""
+plugin_checksum = "sha256_of_the_plugin_binary"
 enabled = true
 plugin_type = "KeyManager"
 plugin_data {
