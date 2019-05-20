@@ -5,4 +5,6 @@ enabled = true
 plugin_type = "KeyManager"
 plugin_data  {
   hsm_path = "/usr/lib/softhsm/libsofthsm2.so"
+  token_label = "key_test"
+  user_pin = "userpin"
 }

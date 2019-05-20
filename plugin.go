@@ -14,13 +14,10 @@ import (
 	"github.com/spiffe/spire/proto/server/keymanager"
 )
 
-const (
-	tokenLabel = "key_test"
-	userPin    = "userpin"
-)
-
 type configuration struct {
-	HSMPath string `hcl:"hsm_path"`
+	HSMPath    string `hcl:"hsm_path"`
+	TokenLabel string `hcl:"token_label"`
+	UserPin    string `hcl:"user_pin"`
 }
 
 type KeyManager struct {
@@ -35,6 +32,7 @@ func New() *KeyManager {
 }
 
 func (m *KeyManager) Configure(ctx context.Context, req *spi.ConfigureRequest) (*spi.ConfigureResponse, error) {
+
 	resp := &spi.ConfigureResponse{}
 	config := &configuration{}
 	hclTree, err := hcl.Parse(req.Configuration)
@@ -42,12 +40,12 @@ func (m *KeyManager) Configure(ctx context.Context, req *spi.ConfigureRequest) (
 		err := fmt.Errorf("Error parsing custom keymanager configuration: %s", err)
 		return resp, err
 	}
+
 	err = hcl.DecodeObject(&config, hclTree)
 	if err != nil {
 		err := fmt.Errorf("Error decoding custom keymanager configuration: %v", err)
 		return resp, err
 	}
-
 	if err := m.configure(config); err != nil {
 		return nil, err
 	}
@@ -58,8 +56,8 @@ func (m *KeyManager) Configure(ctx context.Context, req *spi.ConfigureRequest) (
 func (m *KeyManager) configure(config *configuration) error {
 	cfg := crypto11.PKCS11Config{
 		Path:       config.HSMPath,
-		TokenLabel: tokenLabel,
-		Pin:        userPin,
+		TokenLabel: config.TokenLabel,
+		Pin:        config.UserPin,
 	}
 
 	ctx, err := crypto11.Configure(&cfg)
