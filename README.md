@@ -1,16 +1,8 @@
 # hsm-keymanager
 
 Implements both signing and key storage logic for the server's signing operations. 
-This is a hsm-based `KeyManager` plugin.
+This is a HSM-based `KeyManager` plugin.
 This implementation uses software emulation of HSM - [SoftHSM](https://www.opendnssec.org/softhsm/).
-
-Plugin has specific options, which are used for configuration: 
-
-| Options	| Description |
-| --- | ---|
-|`hsm_path`|The path to SoftHSM library|
-|`token_label`|The name of the user token|
-|`user_pin`|The PIN for the user token|
 
 For installation [SoftHSM](https://www.opendnssec.org/softhsm/) use following instruction:
 ```
@@ -42,13 +34,23 @@ $ softhsm2-util --init-token --slot 0 --label "hsm_test" --pin "userpin" --so-pi
 
 ## Compiling the Plugin
 
-    $ git clone https://github.com/seemenkina/hsm-keymanager
-    $ cd hsm-keymanager/
-    $ go build .
+### Requirements
+
+* `go1.11` or above
+
+### Building
+
+The plugin is designed as go module and manages its dependencies using go module system.
+
+```
+$ git clone https://github.com/seemenkina/hsm-keymanager
+$ cd hsm-keymanager/
+$ go build .
+```
 
 ## Configure SPIRE
 
-SPIRE Server during bootstrap, read plugin config files in the `/opt/spire/conf/server/plugin directories` by default, pluginDir configuration can be changed in `/opt/spire/conf/server/server.conf`.
+SPIRE Server during bootstrap, read plugin config files in the `/opt/spire/conf/server/plugin` directories by default, pluginDir configuration can be changed in `/opt/spire/conf/server/server.conf`.
 
 1. Create a config file `hsm-keymanager.hcl` with the following content in the `/opt/spire/conf/server/plugin` directory:
  
@@ -64,25 +66,30 @@ plugin_data {
     user_pin = "userpin"
 }
 ```` 
-   The following table describes the plugin configurations:
+The following table describes the plugin changeable configurations:
    
 | Configuration	| Description |
 | --- | ---|
-|pluginName|A unique name that describes the plugin|
 |pluginCmd|Path to the plugin binary|
-|pluginChecksum|An optional sha256 of the plugin binary|
-|pluginType|The plugin type|
-|enabled|Boolean specifying if the plugin should be enabled.|
 |pluginData|Plugin-specific configuration|
+
+
+`plugin_data` contains a specific options: 
+
+| Options	| Description |
+| --- | ---|
+|`hsm_path`|The path to SoftHSM library|
+|`token_label`|The name of the user token|
+|`user_pin`|The PIN for the user token|
 
 
 2. Copy the `hsm-keymanager` binary into `plugin_cmd`.
 
 ```
-$ cp $GOPATH/src/github.com/seemenkina/hsm-keymanager/hsm-keymanager <path-to-plugin-binary>
+$ cp hsm-keymanager <path-to-plugin-binary>
 ```
 
-3. In `/opt/spire/conf/server/server.conf` file, identify new `KeyManager` plugin configuration section:
+3. To enable HSM-based KeyManager you need to change `KeyManager` section of `/opt/spire/conf/server/server.conf` to the following:
 
 ````
 KeyManager "hsmkeymanager" {
