@@ -18,7 +18,6 @@
 
 ``
     $ cp $GOPATH/src/github.com/seemenkina/hsm-keymanager/hsm-keymanager.hcl /opt/spire/conf/server/plugin
- 
 ``
 
 3. In `/opt/spire/conf/server/server.conf` file, identify new `KeyManager` plugin configuration section:
