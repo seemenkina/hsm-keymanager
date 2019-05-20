@@ -4,10 +4,7 @@ Implements both signing and key storage logic for the server's signing operation
 This is a HSM-based `KeyManager` plugin.
 This implementation uses software emulation of HSM - [SoftHSM](https://www.opendnssec.org/softhsm/).
 
-For installation [SoftHSM](https://www.opendnssec.org/softhsm/) use following instruction:
-```
-link-to-install-guide
-```
+For installation [SoftHSM](https://www.opendnssec.org/softhsm/) use following instruction in [SoftHSM install guide](https://github.com/seemenkina/hsm-keymanager/blob/master/SOFTHSM.md)
 
 ## Initialize SohtHSM token
 
