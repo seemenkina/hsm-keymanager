@@ -80,6 +80,11 @@ The following table describes the plugin changeable configurations:
 |`token_label`|The name of the user token|
 |`user_pin`|The PIN for the user token|
 
+`plugin_checksum` is computed by following command:
+
+```
+$ sha256sum hsm-keymanager
+```
 
 2. Copy the `hsm-keymanager` binary into `plugin_cmd`.
 
@@ -92,6 +97,7 @@ $ cp hsm-keymanager <path-to-plugin-binary>
 ````
 KeyManager "hsmkeymanager" {
     plugin_cmd = "/root/go/bin/hsm-keymanager"
+    plugin_checksum = "sha256_of_the_plugin_binary"
     plugin_data {
         hsm_path = "/usr/lib/softhsm/libsofthsm2.so"
         token_label = "key_test"
