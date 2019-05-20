@@ -70,8 +70,8 @@ The following table describes the plugin changeable configurations:
    
 | Configuration	| Description |
 | --- | ---|
-|pluginCmd|Path to the plugin binary|
-|pluginData|Plugin-specific configuration|
+|`plugin_cmd`|Path to the plugin binary|
+|`plugin_data`|Plugin-specific configuration|
 
 
 `plugin_data` contains a specific options: 
