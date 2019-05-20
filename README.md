@@ -67,6 +67,7 @@ The following table describes the plugin changeable configurations:
    
 | Configuration	| Description |
 | --- | ---|
+|`plugin_checksum`|An optional sha256 of the plugin binary|
 |`plugin_cmd`|Path to the plugin binary|
 |`plugin_data`|Plugin-specific configuration|
 
