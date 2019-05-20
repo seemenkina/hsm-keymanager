@@ -10,9 +10,9 @@
 
 1. Copy the `hsm-keymanager` binary into `$GOPATH/bin`.
 
-``
+```
     $ cp $GOPATH/src/github.com/seemenkina/hsm-keymanager/hsm-keymanager $GOPATH/bin
-``
+```
 
 2. Copy a config file `hsm-keymanager.hcl` in the `/opt/spire/conf/server/plugin` directory.
 
